@@ -44,19 +44,35 @@ class PolyTreeNode
     nil
   end
 
+  def inspect
+    @value.inspect
+  end
+
+  def bfs(target_value)
+    queue = [self]
+    queue.each { |node| queue.push(*node.children) }
+    queue.each do |node|
+      return node if node.value == target_value
+    end
+    nil
+  end
+
 end
 
 
-nodes = ('a'..'g').map { |value| PolyTreeNode.new(value) }
-parent_index = 0
-nodes.each_with_index do |node, ind|
-  next if ind.zero?
-  node.parent = nodes[parent_index]
-  parent_index += 1 if ind.even?
-end
-require "byebug"
-debugger
-p nodes[0].dfs('e')
+# nodes = ('a'..'g').map { |value| PolyTreeNode.new(value) }
+# parent_index = 0
+# nodes.each_with_index do |node, ind|
+#   next if ind.zero?
+#   node.parent = nodes[parent_index]
+#   parent_index += 1 if ind.even?
+# end
 
+
+# require "byebug"
+# debugger
+
+# p nodes[0].dfs('e')
+# nodes[0].bfs('e')
 
 
