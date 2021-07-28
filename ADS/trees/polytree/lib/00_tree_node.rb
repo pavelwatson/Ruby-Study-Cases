@@ -33,5 +33,30 @@ class PolyTreeNode
     raise "Node is not a child" unless @children.include?(child_node)
     @children.delete(child_node)
   end
+
+
+  def dfs(target_value)
+    return self if @value == target_value
+    @children.each do |child|
+      search_result = child.dfs(target_value)
+      return search_result if search_result
+    end
+    nil
+  end
+
 end
+
+
+nodes = ('a'..'g').map { |value| PolyTreeNode.new(value) }
+parent_index = 0
+nodes.each_with_index do |node, ind|
+  next if ind.zero?
+  node.parent = nodes[parent_index]
+  parent_index += 1 if ind.even?
+end
+require "byebug"
+debugger
+p nodes[0].dfs('e')
+
+
 
