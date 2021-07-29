@@ -1,4 +1,8 @@
+require_relative './searchable'
+
 class PolyTreeNode
+  include Searchable
+
   attr_reader :value, :parent
   attr_accessor :children
   def initialize(value)
@@ -35,27 +39,8 @@ class PolyTreeNode
   end
 
 
-  def dfs(target_value)
-    return self if @value == target_value
-    @children.each do |child|
-      search_result = child.dfs(target_value)
-      return search_result if search_result
-    end
-    nil
-  end
-
   def inspect
     @value.inspect
-  end
-
-  def bfs(target_value)
-    queue = [self]
-    while !queue.empty?
-      node = queue.shift
-      return node if node.value == target_value
-      queue.push(*node.children)
-    end
-  nil
   end
 end
 
@@ -73,6 +58,6 @@ end
 # debugger
 
 # p nodes[0].dfs('e')
-nodes[0].bfs('e')
+p nodes[0].bfs('e')
 
 
